@@ -1,0 +1,219 @@
+<title>Infinipedia Logo Options</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@500&family=Fraunces:opsz,wght@9..144,500&family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600&display=swap">
+<style>
+/* Layout: option gallery on top, then a sticky control bar and a test bench of real-size surfaces for the selected mark. */
+:root {
+  --bg: #eef0f4; --panel: #ffffff; --fg: #141a26; --muted: #5b6475; --line: #d5d9e2; --ui: #1d3f9c; --ui-fg: #ffffff;
+  --paper: #ffffff; --night: #0e1116; --chrome-l: #dfe3ea; --chrome-d: #1f242d;
+  --font: "Inter", system-ui, sans-serif; --display: "Space Grotesk", "Inter", system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --bg: #0f1218; --panel: #181c25; --fg: #e9ecf2; --muted: #9aa3b5; --line: #2c3340; --ui: #8fa8ff; --ui-fg: #0f1218; color-scheme: dark } }
+:root[data-theme="dark"] { --bg: #0f1218; --panel: #181c25; --fg: #e9ecf2; --muted: #9aa3b5; --line: #2c3340; --ui: #8fa8ff; --ui-fg: #0f1218; color-scheme: dark }
+* { box-sizing: border-box }
+body { background: var(--bg); color: var(--fg); font: 14px/1.5 var(--font); }
+.wrap { max-width: 1120px; margin: 0 auto; padding-block: 28px 64px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); display: flex; flex-direction: column; gap: 28px }
+h1 { font: 600 28px/1.15 var(--display); margin: 0; text-wrap: balance }
+h3 { font: 600 11px/1.2 var(--font); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin: 0 }
+p { margin: 0; max-width: 68ch }
+.lede { color: var(--muted) }
+.gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 12px }
+.opt { all: unset; box-sizing: border-box; cursor: pointer; background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 14px; display: flex; flex-direction: column; gap: 10px; min-width: 0 }
+.opt:focus-visible, button:focus-visible, select:focus-visible, input:focus-visible { outline: 2px solid var(--ui); outline-offset: 2px }
+.opt[aria-pressed="true"] { border-color: var(--ui); box-shadow: 0 0 0 2px var(--ui) }
+.opt .hero { display: flex; align-items: flex-end; gap: 12px }
+.opt .minis { display: flex; align-items: flex-end; gap: 8px; margin-left: auto }
+.opt .name { font: 600 15px/1.2 var(--display) }
+.opt .idea { color: var(--muted); font-size: 13px }
+.bar { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; display: flex; flex-wrap: wrap; gap: 12px 20px; align-items: center }
+.bar label { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--muted) }
+.bar select, .bar input[type=range] { font: inherit; color: var(--fg) }
+.bar input[type=range] { width: 110px }
+.bar select { background: var(--bg); border: 1px solid var(--line); border-radius: 6px; padding: 4px 6px }
+.sw { display: flex; gap: 6px; align-items: center }
+.sw button { all: unset; cursor: pointer; width: 22px; height: 22px; border-radius: 50%; border: 2px solid var(--panel); box-shadow: 0 0 0 1px var(--line) }
+.sw button[aria-pressed="true"] { box-shadow: 0 0 0 2px var(--fg) }
+.sw input[type=color] { width: 28px; height: 26px; padding: 0; border: 0; background: none }
+.acts { display: flex; gap: 8px; margin-left: auto }
+.btn { all: unset; cursor: pointer; background: var(--ui); color: var(--ui-fg); font-weight: 600; font-size: 12px; padding: 6px 12px; border-radius: 6px }
+.btn.ghost { background: none; color: var(--fg); box-shadow: inset 0 0 0 1px var(--line) }
+.bench { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 330px), 1fr)); gap: 12px }
+.cell { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 14px; display: flex; flex-direction: column; gap: 12px; min-width: 0 }
+.cell.wide { grid-column: 1 / -1 }
+.surf { border-radius: 8px; padding: 14px; display: flex; flex-wrap: wrap; align-items: flex-end; gap: 14px 18px; min-width: 0 }
+.surf.l { background: var(--paper); color: #141a26; border: 1px solid var(--line) }
+.surf.d { background: var(--night); color: #e9ecf2 }
+.sz { display: flex; flex-direction: column; align-items: center; gap: 5px; font-size: 10px; font-variant-numeric: tabular-nums }
+.sz span { opacity: .65 }
+.tabs { border-radius: 8px 8px 0 0; padding: 6px 8px 0; display: flex; gap: 4px; overflow: hidden }
+.tabs.l { background: var(--chrome-l); color: #141a26 } .tabs.d { background: var(--chrome-d); color: #e9ecf2 }
+.tab { display: flex; align-items: center; gap: 8px; padding: 7px 10px; border-radius: 8px 8px 0 0; font-size: 12px; white-space: nowrap; min-width: 0 }
+.tab.on { flex: 0 1 190px } .tab.off { opacity: .55; flex: 0 1 140px }
+.tabs.l .tab.on { background: var(--paper) } .tabs.d .tab.on { background: #2b313c }
+.tab span { overflow: hidden; text-overflow: ellipsis }
+.dot { width: 16px; height: 16px; border-radius: 4px; background: currentColor; opacity: .35; flex: none }
+.url { padding: 7px 10px; font-size: 12px; display: flex; gap: 8px; align-items: center; border-radius: 0 0 8px 8px }
+.url.l { background: var(--paper); color: #5b6475; border: 1px solid var(--line); border-top: 0 } .url.d { background: #2b313c; color: #9aa3b5 }
+.phone { border-radius: 26px; padding: 22px 16px 18px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px 8px; max-width: 320px; width: 100% }
+.phone.l { background: linear-gradient(160deg, #c9d6ee, #f1dccb); color: #141a26 } .phone.d { background: linear-gradient(160deg, #1a2238, #2a1a2c); color: #e9ecf2 }
+.app { display: flex; flex-direction: column; align-items: center; gap: 5px; font-size: 10px; min-width: 0 }
+.app i { display: block; width: 56px; height: 56px; border-radius: 23%; background: currentColor; opacity: .22 }
+.app span { max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap }
+.phones { display: flex; flex-wrap: wrap; gap: 14px }
+.lock { display: flex; align-items: center; gap: .32em; line-height: 1; white-space: nowrap }
+.hdr { border-radius: 8px; padding: 10px 14px; display: flex; align-items: center; gap: 18px; font-size: 12px; overflow: hidden }
+.hdr.l { background: var(--paper); color: #141a26; border: 1px solid var(--line) } .hdr.d { background: var(--night); color: #e9ecf2 }
+.hdr nav { display: flex; gap: 14px; opacity: .6; margin-left: auto; white-space: nowrap }
+.big { justify-content: center; padding: 28px 14px }
+textarea { width: 100%; min-height: 110px; font: 11px/1.4 ui-monospace, Menlo, monospace; background: var(--bg); color: var(--fg); border: 1px solid var(--line); border-radius: 6px; padding: 8px }
+.note { font-size: 12px; color: var(--muted) }
+</style>
+
+<div class="wrap">
+  <header style="display:flex;flex-direction:column;gap:8px">
+    <h1>Infinipedia logo options</h1>
+    <p class="lede">Six takes on the open infinity: an infinity sign left open so that it also reads as a lowercase alpha and the early Christian fish. Pick one, adjust it, and check it at every size from a 16 px tab icon to an app icon and a site header. Reset returns every control to its starting value.</p>
+  </header>
+
+  <section class="gallery" id="gallery" aria-label="Logo options"></section>
+
+  <div class="bar" id="bar">
+    <strong id="selname" style="font:600 15px var(--display)"></strong>
+    <div class="sw" id="swatches" role="group" aria-label="Brand color"></div>
+    <label>Opening <input type="range" id="open" min="2" max="42" step="1"></label>
+    <label>Tilt <input type="range" id="tilt" min="-30" max="30" step="1"></label>
+    <label>Weight <input type="range" id="weight" min="0.7" max="1.5" step="0.05"></label>
+    <label>Size in tile <input type="range" id="scale" min="0.5" max="0.9" step="0.02"></label>
+    <label>Tile <select id="shape"><option value="squircle">App squircle</option><option value="rounded">Rounded</option><option value="square">Square</option><option value="circle">Circle</option></select></label>
+    <label>Wordmark <select id="font"><option value="EB Garamond">EB Garamond</option><option value="Fraunces">Fraunces</option><option value="Space Grotesk">Space Grotesk</option></select></label>
+    <label><input type="checkbox" id="invert"> Light tile</label>
+    <label><input type="checkbox" id="favbare"> Tab icon without tile</label>
+    <div class="acts"><button class="btn ghost" id="reset" type="button">Reset</button><button class="btn" id="copy" type="button">Copy SVG</button></div>
+  </div>
+
+  <section class="bench" id="bench" aria-label="Size tests"></section>
+  <p class="note" id="idea"></p>
+</div>
+
+<script>
+const IVORY = '#fbf6ea';
+const COLORS = [['Lapis', '#1d3f9c'], ['Ink', '#121a2b'], ['Vermilion', '#c2341d'], ['Ochre', '#a36f10'], ['Vine', '#23603f'], ['Tyrian', '#5b2a6e']];
+
+// Sample a chain of cubic beziers into points.
+function sample(start, segs, n = 28) {
+  const pts = [start]; let p0 = start;
+  for (const [x1, y1, x2, y2, x3, y3] of segs) {
+    for (let i = 1; i <= n; i++) { const t = i / n, u = 1 - t; pts.push([u * u * u * p0[0] + 3 * u * u * t * x1 + 3 * u * t * t * x2 + t * t * t * x3, u * u * u * p0[1] + 3 * u * u * t * y1 + 3 * u * t * t * y2 + t * t * t * y3]) }
+    p0 = [x3, y3];
+  }
+  return pts;
+}
+// Closed infinity sign starting and ending at its far right point, so trimming both ends opens it there.
+const LOOP = sample([90, 50], [[90, 38, 82, 28, 70, 28], [62, 28, 57, 38, 50, 50], [43, 62, 38, 72, 30, 72], [18, 72, 10, 62, 10, 50], [10, 38, 18, 28, 30, 28], [38, 28, 43, 38, 50, 50], [57, 62, 62, 72, 70, 72], [82, 72, 90, 62, 90, 50]]);
+// Pointed fish: two arcs from the tail tips meeting at the nose.
+const FISH = sample([90, 72], [[58, 22, 28, 22, 10, 50], [28, 78, 58, 78, 90, 28]]);
+
+function trim(pts, pct) {
+  const len = [0]; for (let i = 1; i < pts.length; i++) len.push(len[i - 1] + Math.hypot(pts[i][0] - pts[i - 1][0], pts[i][1] - pts[i - 1][1]));
+  const L = len[len.length - 1], a = L * pct / 200, b = L - a, at = s => { let i = 1; while (len[i] < s) i++; const f = (s - len[i - 1]) / (len[i] - len[i - 1]); return [pts[i - 1][0] + f * (pts[i][0] - pts[i - 1][0]), pts[i - 1][1] + f * (pts[i][1] - pts[i - 1][1])] };
+  return [at(a), ...pts.filter((_, i) => len[i] > a && len[i] < b), at(b)];
+}
+// Rotate, recentre on the tile, and stroke: monoline, or broad-nib (thin copies swept along the nib).
+function stroke(pts, w, fg, tilt, nib) {
+  const r = tilt * Math.PI / 180, c = Math.cos(r), s = Math.sin(r);
+  let q = pts.map(([x, y]) => [50 + (x - 50) * c - (y - 50) * s, 50 + (x - 50) * s + (y - 50) * c]);
+  const xs = q.map(p => p[0]), ys = q.map(p => p[1]), dx = 50 - (Math.min(...xs) + Math.max(...xs)) / 2, dy = 50 - (Math.min(...ys) + Math.max(...ys)) / 2;
+  const d = 'M' + q.map(p => (p[0] + dx).toFixed(2) + ' ' + (p[1] + dy).toFixed(2)).join('L');
+  const path = (sw, tr = '') => `<path d="${d}" fill="none" stroke="${fg}" stroke-width="${sw.toFixed(2)}" stroke-linecap="round" stroke-linejoin="round"${tr}/>`;
+  if (!nib) return path(w);
+  const thin = w * 0.34, L = w * 1.05, n = 10, a = -38 * Math.PI / 180; let out = '';
+  for (let i = 0; i <= n; i++) { const o = (i / n - 0.5) * L; out += path(thin, ` transform="translate(${(o * Math.cos(a)).toFixed(2)} ${(o * Math.sin(a)).toFixed(2)})"`) }
+  return out;
+}
+
+const MARKS = [
+  { id: 'open-infinity', name: 'Open Infinity', w: 11, open: 10, tilt: 0, idea: 'The original: an infinity sign left open at one end. Opened, it is a lowercase alpha and the fish the first Christians drew.' },
+  { id: 'alpha', name: 'Alpha', w: 11, open: 30, tilt: 0, idea: 'The opening widened until only the letter is left. Reads first as alpha, the beginning; the infinity is a memory in the curve of the tails.' },
+  { id: 'rising', name: 'Rising Infinity', w: 11, open: 14, tilt: -14, idea: 'The same sign tilted so the open end points up and forward. The most hopeful posture, and still square enough for an app tile.' },
+  { id: 'quill-infinity', name: 'Quill Infinity', w: 12, open: 10, tilt: 0, nib: true, idea: 'Written with a broad nib, thick and thin like a scribe’s stroke, so the mark belongs to the same hand as the EB Garamond wordmark.' },
+  { id: 'quill-alpha', name: 'Quill Alpha', w: 12, open: 30, tilt: 0, nib: true, idea: 'The alpha in the same broad-nib stroke. Closest to an actual Greek manuscript letter.' },
+  { id: 'ichthys', name: 'Ichthys', w: 10, open: null, tilt: 0, fish: true, idea: 'The pointed fish itself, two arcs. The most recognisably Christian of the six and the least like an infinity sign.' },
+];
+const DEFAULTS = { color: '#1d3f9c', weight: 1, scale: 0.72, shape: 'squircle', font: 'EB Garamond', invert: false, favbare: false, geo: {} };
+const st = Object.assign({ sel: 'open-infinity' }, JSON.parse(JSON.stringify(DEFAULTS)), load());
+if (!MARKS.some(m => m.id === st.sel)) st.sel = MARKS[0].id;
+if (!st.geo || typeof st.geo !== 'object') st.geo = {};
+function load() { try { return JSON.parse(localStorage.getItem('infini-logo-2') || '{}') } catch (e) { return {} } }
+function save() { try { localStorage.setItem('infini-logo-2', JSON.stringify(st)) } catch (e) {} }
+const mark = id => MARKS.find(m => m.id === id) || MARKS[0];
+const geo = m => Object.assign({ open: m.open, tilt: m.tilt }, st.geo[m.id]);
+function draw(m, fg) { const g = geo(m); return stroke(m.fish ? FISH : trim(LOOP, g.open), m.w * st.weight, fg, g.tilt, m.nib) }
+
+// surface: 'tile' | 'light' | 'dark' (bare mark on a light or dark ground)
+function svg(id, size, surface, shape = st.shape, standalone = false) {
+  const m = mark(id);
+  let bg = '', fg, sc = 1;
+  if (surface === 'tile') {
+    const tb = st.invert ? IVORY : st.color; fg = st.invert ? st.color : IVORY; sc = st.scale / 0.8;
+    bg = shape === 'circle' ? `<circle cx="50" cy="50" r="50" fill="${tb}"/>` : `<rect width="100" height="100" rx="${{ squircle: 23, rounded: 14, square: 0 }[shape]}" fill="${tb}"/>`;
+  } else fg = surface === 'light' ? st.color : IVORY;
+  return `<svg ${standalone ? 'xmlns="http://www.w3.org/2000/svg" ' : ''}width="${size}" height="${size}" viewBox="0 0 100 100" role="img" aria-label="${m.name}">${bg}<g transform="translate(50 50) scale(${sc.toFixed(3)}) translate(-50 -50)">${draw(m, fg)}</g></svg>`;
+}
+const sized = (id, sizes, surface, shape) => sizes.map(s => `<div class="sz">${svg(id, s, surface, shape)}<span>${s}</span></div>`).join('');
+const fav = (id, ground) => st.favbare ? svg(id, 16, ground) : svg(id, 16, 'tile', 'rounded');
+const lock = (id, h, ground) => `<div class="lock" style="font: 500 ${Math.round(h * 0.92)}px '${st.font}', Georgia, serif">${svg(id, h, ground)}<span>infinipedia</span></div>`;
+
+function gallery() {
+  document.getElementById('gallery').innerHTML = MARKS.map(m => `<button class="opt" type="button" data-id="${m.id}" aria-pressed="${m.id === st.sel}">
+    <div class="hero">${svg(m.id, 96, 'tile')}<div class="minis">${svg(m.id, 32, 'tile', 'rounded')}${svg(m.id, 16, 'tile', 'rounded')}</div></div>
+    <div class="name">${m.name}</div><div class="idea">${m.idea}</div></button>`).join('');
+}
+function bench() {
+  const id = st.sel, m = mark(id), tabs = g => `<div><div class="tabs ${g}"><div class="tab off"><i class="dot"></i><span>Wikipedia</span></div><div class="tab on">${fav(id, g === 'l' ? 'light' : 'dark')}<span>Rome: compare versions</span></div><div class="tab off"><i class="dot"></i><span>Mail</span></div></div><div class="url ${g}">${fav(id, g === 'l' ? 'light' : 'dark')} infinipedia.net/rome</div></div>`;
+  const ph = n => `<div class="app"><i></i><span>${n}</span></div>`;
+  const phone = g => `<div class="phone ${g}">${ph('Mail')}${ph('Maps')}<div class="app">${svg(id, 56, 'tile', 'squircle')}<span>Infinipedia</span></div>${ph('Notes')}${ph('Photos')}${ph('Clock')}</div>`;
+  document.getElementById('selname').textContent = m.name;
+  document.getElementById('idea').textContent = m.name + ': ' + m.idea;
+  document.getElementById('bench').innerHTML = `
+    <div class="cell"><h3>Browser tab, 16 px</h3>${tabs('l')}${tabs('d')}</div>
+    <div class="cell"><h3>Favicon sizes on tile</h3><div class="surf l">${sized(id, [16, 20, 24, 32, 48, 64], 'tile', 'rounded')}</div><div class="surf d">${sized(id, [16, 20, 24, 32, 48, 64], 'tile', 'rounded')}</div></div>
+    <div class="cell"><h3>Favicon sizes, bare mark</h3><div class="surf l">${sized(id, [16, 20, 24, 32, 48, 64], 'light')}</div><div class="surf d">${sized(id, [16, 20, 24, 32, 48, 64], 'dark')}</div></div>
+    <div class="cell wide"><h3>App icons, chosen tile shape</h3><div class="surf l">${sized(id, [180, 120, 87, 60, 40, 29, 20], 'tile')}</div></div>
+    <div class="cell"><h3>Android round and avatar</h3><div class="surf d">${sized(id, [96, 72, 48, 36, 24], 'tile', 'circle')}</div></div>
+    <div class="cell"><h3>Maskable square, PWA</h3><div class="surf l">${sized(id, [96, 72, 48, 36, 24], 'tile', 'square')}</div></div>
+    <div class="cell wide"><h3>Phone home screen</h3><div class="phones">${phone('l')}${phone('d')}</div></div>
+    <div class="cell wide"><h3>Site header</h3>
+      <div class="hdr l">${lock(id, 26, 'light')}<nav><span>Articles</span><span>Groups</span><span>Compare</span></nav></div>
+      <div class="hdr d">${lock(id, 26, 'dark')}<nav><span>Articles</span><span>Groups</span><span>Compare</span></nav></div>
+      <div class="hdr l">${lock(id, 18, 'light')}<nav><span>Mobile header</span></nav></div></div>
+    <div class="cell wide"><h3>Lockup</h3><div class="surf l big">${lock(id, 64, 'light')}</div><div class="surf d big">${lock(id, 64, 'dark')}</div></div>
+    <div class="cell wide"><h3>SVG of the app tile</h3><textarea id="svgout" readonly aria-label="SVG source">${svg(id, 512, 'tile', st.shape, true).replace(/</g, '&lt;')}</textarea></div>`;
+}
+function controls() {
+  const m = mark(st.sel), g = geo(m);
+  document.getElementById('swatches').innerHTML = COLORS.map(([n, c]) => `<button type="button" title="${n}" aria-label="${n}" aria-pressed="${c === st.color}" data-c="${c}" style="background:${c}"></button>`).join('') + `<input type="color" id="custom" aria-label="Custom color" value="${st.color}">`;
+  for (const k of ['weight', 'scale', 'shape', 'font']) document.getElementById(k).value = st[k];
+  const o = document.getElementById('open'); o.disabled = !!m.fish; o.value = m.fish ? 10 : g.open;
+  document.getElementById('tilt').value = g.tilt;
+  document.getElementById('invert').checked = st.invert; document.getElementById('favbare').checked = st.favbare;
+}
+function render() { gallery(); controls(); bench(); save() }
+
+document.getElementById('gallery').addEventListener('click', e => { const b = e.target.closest('.opt'); if (b) { st.sel = b.dataset.id; render() } });
+document.getElementById('bar').addEventListener('input', e => {
+  const t = e.target;
+  if (t.id === 'custom') st.color = t.value;
+  else if (t.id === 'open' || t.id === 'tilt') st.geo[st.sel] = Object.assign({}, st.geo[st.sel], { [t.id]: +t.value });
+  else if (t.type === 'checkbox') st[t.id] = t.checked; else if (t.type === 'range') st[t.id] = +t.value; else if (t.id in st) st[t.id] = t.value;
+  if (t.type === 'range' || t.id === 'custom') { gallery(); bench(); save() } else render();
+});
+document.getElementById('bar').addEventListener('click', e => {
+  const c = e.target.closest('[data-c]'); if (c) { st.color = c.dataset.c; render(); return }
+  if (e.target.id === 'reset') { Object.assign(st, JSON.parse(JSON.stringify(DEFAULTS))); render(); return }
+  if (e.target.id === 'copy') {
+    const ta = document.getElementById('svgout'), btn = e.target, done = t => { btn.textContent = t; setTimeout(() => btn.textContent = 'Copy SVG', 1500) };
+    navigator.clipboard.writeText(ta.value).then(() => done('Copied'), () => { ta.focus(); ta.select(); done('Selected below') });
+  }
+});
+render();
+</script>
